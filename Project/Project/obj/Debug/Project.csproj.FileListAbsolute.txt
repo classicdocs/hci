@@ -1,0 +1,14 @@
+D:\Workspace\Interakcija covek-racunar\Project\Project\bin\Debug\Project.exe.config
+D:\Workspace\Interakcija covek-racunar\Project\Project\bin\Debug\Project.exe
+D:\Workspace\Interakcija covek-racunar\Project\Project\bin\Debug\Project.pdb
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\Project.csprojResolveAssemblyReference.cache
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\MainWindow.g.cs
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\App.g.cs
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\Project_MarkupCompile.cache
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\Project_MarkupCompile.lref
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\MainWindow.baml
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\Project.g.resources
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\Project.Properties.Resources.resources
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\Project.csproj.GenerateResource.Cache
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\Project.exe
+D:\Workspace\Interakcija covek-racunar\Project\Project\obj\Debug\Project.pdb
