@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project"
+        Loaded="Window_Loaded"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid RenderTransformOrigin="-0.074,-0.026">
@@ -16,6 +17,7 @@
             <ColumnDefinition Width="135*"/>
 
         </Grid.ColumnDefinitions>
-
+        <Button x:Name="button" Click="refresh_click" Content="Refresh" Grid.Column="4" HorizontalAlignment="Left" Margin="50.8,33,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label Content="LABELA" Grid.Column="3" x:Name="location"></Label>
     </Grid>
 </Window>

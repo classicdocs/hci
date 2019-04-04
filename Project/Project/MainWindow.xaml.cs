@@ -20,9 +20,36 @@ namespace Project
     /// </summary>
     public partial class MainWindow : Window
     {
+        private String currentLocation = "";
+        private Weather weather;
+
         public MainWindow()
         {
             InitializeComponent();
+            ApiHandler.InitializeClient();
         }
+
+        private void LoadWeather()
+        {
+            var weather =  ApiProcessor.LoadWeather(currentLocation);
+        }
+
+        private async Task LoadLocation()
+        {
+            var city = await ApiProcessor.LoadLocation();
+            currentLocation = city.city;
+            location.Content = currentLocation;
+        }
+
+        private void refresh_click(object sender, RoutedEventArgs e)
+        {
+            LoadWeather();
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            await LoadLocation();
+        }
+
     }
 }
