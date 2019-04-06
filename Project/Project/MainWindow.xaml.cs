@@ -38,7 +38,7 @@ namespace Project
         {
             var city = await ApiProcessor.LoadLocation();
             currentLocation = city.city;
-            location.Content = currentLocation;
+            //location.Content = currentLocation;
         }
 
         private void refresh_click(object sender, RoutedEventArgs e)
@@ -49,6 +49,48 @@ namespace Project
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadLocation();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyTextBox.Visibility == Visibility.Visible)
+            {
+                MyTextBox.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                MyTextBox.Visibility = Visibility.Visible;
+                MyFavouritesBox.Visibility = Visibility.Hidden;
+                HistoryBox.Visibility = Visibility.Hidden;
+
+            }
+        }
+        private void Favourites_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyFavouritesBox.Visibility == Visibility.Visible)
+            {
+                MyFavouritesBox.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                MyFavouritesBox.Visibility = Visibility.Visible;
+                MyTextBox.Visibility = Visibility.Hidden;
+                HistoryBox.Visibility = Visibility.Hidden;
+
+            }
+        }
+        private void History_Click(object sender, RoutedEventArgs e)
+        {
+            if (HistoryBox.Visibility == Visibility.Visible)
+            {
+                HistoryBox.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                HistoryBox.Visibility = Visibility.Visible;
+                MyTextBox.Visibility = Visibility.Hidden;
+                MyFavouritesBox.Visibility = Visibility.Hidden;
+            }
         }
 
     }

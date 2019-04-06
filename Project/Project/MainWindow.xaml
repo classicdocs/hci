@@ -6,18 +6,277 @@
         xmlns:local="clr-namespace:Project"
         Loaded="Window_Loaded"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid RenderTransformOrigin="-0.074,-0.026">
+        Title="MainWindow" Height="600" Width="800" MinHeight="300" MinWidth="400">
+    <Grid>
         <Grid.ColumnDefinitions>
-
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="28*"/>
-            <ColumnDefinition Width="315*"/>
-            <ColumnDefinition Width="135*"/>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            
 
         </Grid.ColumnDefinitions>
-        <Button x:Name="button" Click="refresh_click" Content="Refresh" Grid.Column="4" HorizontalAlignment="Left" Margin="50.8,33,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label Content="LABELA" Grid.Column="3" x:Name="location"></Label>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="1.3*" />
+            <RowDefinition Height="0.03*" />
+            <RowDefinition Height="1.3*" />
+            <RowDefinition Height="0.03*" />
+            <RowDefinition Height="2.7*" />
+            <RowDefinition Height="0.03*" />
+        </Grid.RowDefinitions>
+        <!--<Button>Button 1</Button>
+        <Button Grid.Column="1">Button 2</Button>
+        <Button Grid.Column="2">Button 3</Button>
+        <Button Grid.Row="1">Button 4</Button>
+        <Button Grid.Column="1" Grid.Row="1">Button 5</Button>
+        <Button Grid.Column="2" Grid.Row="1">Button 6</Button> -->
+        <Grid Grid.ColumnSpan="5" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  />
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.1*" />
+                <ColumnDefinition Width="0.1*" />
+            </Grid.ColumnDefinitions>
+            <TextBox Name="MyTextBox" Text="Type city name"/>
+
+            <ComboBox Name="MyFavouritesBox" Visibility="Hidden">
+                <ComboBoxItem>Favourites Item #1</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">Favourites Item #2</ComboBoxItem>
+                <ComboBoxItem>Favourites Item #3</ComboBoxItem>
+            </ComboBox>
+            <ComboBox Name="HistoryBox" Visibility="Hidden">
+                <ComboBoxItem>History Item #1</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">History Item #2</ComboBoxItem>
+                <ComboBoxItem>History Item #3</ComboBoxItem>
+            </ComboBox>
+            <Button Grid.Column="1" Content="SEARCH" Margin="5" Click="Button_Click"/>
+            <Button Grid.Column="2" Content="Favourites" Margin="5" Click="Favourites_Click"/>
+            <Button Grid.Column="3" Content="history" Margin="5" Click="History_Click"/>
+
+        </Grid>
+        <Button Grid.Row="1" Grid.ColumnSpan="5">Ovde ide za danasnji dan</Button>
+        <Button Grid.Row="2" Grid.ColumnSpan="5"></Button>
+        <Button Grid.Row="4" Grid.ColumnSpan="5"></Button>
+        <Button Grid.Row="6" Grid.ColumnSpan="5"></Button>
+<!--
+        <Button Grid.Column="0" Grid.Row="2" Margin="0,0.4,39,0.2" Grid.ColumnSpan="2">Sati</Button>
+        <Button Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Margin="13,0.4,25,0.2">Sati</Button>
+        <Button Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Margin="27,0.4,10,0.2">Sati</Button>
+        <Button Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Margin="42,0.4,0,0.2">Sati</Button>
+        <Button Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0.4,39.2,0.2">Sati</Button>
+        <Button Grid.Column="6" Grid.Row="2">Sati</Button>
+        <Button Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="3" Margin="51,0.4,28.4,0.2">Sati</Button>
+        <Button Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="2" Margin="22.8,0.4,0.4,0.2">Sati</Button>
+-->
+        <Grid Grid.Row="3" Grid.ColumnSpan="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="2">
+                <Grid Grid.Row="0" Grid.Column="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" >Sat</Label>
+                    <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                    <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"  >27/17</Label>
+                </Grid>
+            </Border>
+            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="2">
+                <Grid Grid.Row="0" Grid.Column="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" >Sat</Label>
+                    <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                    <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"  >27/17</Label>
+                </Grid>
+            </Border>
+            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="2">
+                <Grid Grid.Row="0" Grid.Column="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" >Sat</Label>
+                    <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                    <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"  >27/17</Label>
+                </Grid>
+            </Border>
+            <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="2">
+                <Grid Grid.Row="0" Grid.Column="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" >Sat</Label>
+                    <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                    <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"  >27/17</Label>
+                </Grid>
+            </Border>
+            <Border Grid.Column="3" BorderBrush="Gray" BorderThickness="2">
+                <Grid Grid.Row="0" Grid.Column="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" >Sat</Label>
+                    <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                    <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"  >27/17</Label>
+                </Grid>
+            </Border>
+            <Border Grid.Column="4" BorderBrush="Gray" BorderThickness="2">
+                <Grid Grid.Row="0" Grid.Column="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" >Sat</Label>
+                    <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                    <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"  >27/17</Label>
+                </Grid>
+            </Border>
+            <Border Grid.Column="5" BorderBrush="Gray" BorderThickness="2">
+                <Grid Grid.Row="0" Grid.Column="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" >Sat</Label>
+                    <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                    <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"  >27/17</Label>
+                </Grid>
+            </Border>
+            <Border Grid.Column="6" BorderBrush="Gray" BorderThickness="2">
+                <Grid Grid.Row="0" Grid.Column="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" >Sat</Label>
+                    <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                    <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"  >27/17</Label>
+                </Grid>
+            </Border>
+            <Border Grid.Column="7" BorderBrush="Gray" BorderThickness="2">
+                <Grid Grid.Row="0" Grid.Column="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.8*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" >Sat</Label>
+                    <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                    <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"  >27/17</Label>
+                </Grid>
+            </Border>
+        </Grid>
+        <Border Grid.Row="5" Grid.Column="0" BorderBrush="Gray" BorderThickness="2">
+            <Grid Grid.Row="0" Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.4*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="0.4*"></RowDefinition>
+                    <RowDefinition Height="0.2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" >Today</Label>
+                <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"  >27/17</Label>
+                <Button Grid.Row="3" Width="100" FontSize="15" Click="Button_Click" >Hourly</Button>
+            </Grid>
+        </Border>
+        <Border Grid.Row="5" Grid.Column="1" BorderBrush="Gray" BorderThickness="2">
+            <Grid Grid.Row="0" Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.4*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="0.4*"></RowDefinition>
+                    <RowDefinition Height="0.2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" >Today</Label>
+                <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"  >27/17</Label>
+                <Button Grid.Row="3" Width="100" FontSize="15" Click="Button_Click" >Hourly</Button>
+            </Grid>
+        </Border>
+        <Border Grid.Row="5" Grid.Column="2" BorderBrush="Gray" BorderThickness="2">
+            <Grid Grid.Row="0" Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.4*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="0.4*"></RowDefinition>
+                    <RowDefinition Height="0.2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" >Today</Label>
+                <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"  >27/17</Label>
+                <Button Grid.Row="3" Width="100" FontSize="15" Click="Button_Click" >Hourly</Button>
+            </Grid>
+        </Border>
+        <Border Grid.Row="5" Grid.Column="3" BorderBrush="Gray" BorderThickness="2">
+            <Grid Grid.Row="0" Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.4*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="0.4*"></RowDefinition>
+                    <RowDefinition Height="0.2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" >Today</Label>
+                <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"  >27/17</Label>
+                <Button Grid.Row="3" Width="100" FontSize="15" Click="Button_Click" >Hourly</Button>
+            </Grid>
+        </Border>
+        <Border Grid.Row="5" Grid.Column="4" BorderBrush="Gray" BorderThickness="2">
+            <Grid Grid.Row="0" Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.4*"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="0.4*"></RowDefinition>
+                    <RowDefinition Height="0.2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" >Today</Label>
+                <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" >SLIKA</Label>
+                <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"  >27/17</Label>
+                <Button Grid.Row="3" Width="100" FontSize="15" Click="Button_Click" >Hourly</Button>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
