@@ -53,33 +53,30 @@ namespace Project
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (MyTextBox.Visibility == Visibility.Visible)
-            {
-                MyTextBox.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                MyTextBox.Visibility = Visibility.Visible;
-                MyFavouritesBox.Visibility = Visibility.Hidden;
-                HistoryBox.Visibility = Visibility.Hidden;
-
-            }
+            
         }
-        private void Favourites_Click(object sender, RoutedEventArgs e)
+
+        private void searchClick(object sender, RoutedEventArgs e)
+        {
+            searchBox.Visibility = Visibility.Visible;
+            MyFavouritesBox.Visibility = Visibility.Hidden;
+            HistoryBox.Visibility = Visibility.Hidden;
+            
+        }
+        private void favouritesClick(object sender, RoutedEventArgs e)
         {
             if (MyFavouritesBox.Visibility == Visibility.Visible)
             {
                 MyFavouritesBox.Visibility = Visibility.Hidden;
+
             }
             else
             {
                 MyFavouritesBox.Visibility = Visibility.Visible;
-                MyTextBox.Visibility = Visibility.Hidden;
                 HistoryBox.Visibility = Visibility.Hidden;
-
             }
         }
-        private void History_Click(object sender, RoutedEventArgs e)
+        private void historyClick(object sender, RoutedEventArgs e)
         {
             if (HistoryBox.Visibility == Visibility.Visible)
             {
@@ -88,10 +85,10 @@ namespace Project
             else
             {
                 HistoryBox.Visibility = Visibility.Visible;
-                MyTextBox.Visibility = Visibility.Hidden;
                 MyFavouritesBox.Visibility = Visibility.Hidden;
             }
         }
+
 
     }
 }

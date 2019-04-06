@@ -7,7 +7,11 @@
         Loaded="Window_Loaded"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" MinHeight="300" MinWidth="400">
+    
     <Grid>
+        
+        
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
@@ -42,21 +46,26 @@
                 <ColumnDefinition Width="0.1*" />
                 <ColumnDefinition Width="0.1*" />
             </Grid.ColumnDefinitions>
-            <TextBox Name="MyTextBox" Text="Type city name"/>
+            
+            <TextBox Name="searchBox" Text="search"/>
 
             <ComboBox Name="MyFavouritesBox" Visibility="Hidden">
                 <ComboBoxItem>Favourites Item #1</ComboBoxItem>
                 <ComboBoxItem IsSelected="True">Favourites Item #2</ComboBoxItem>
                 <ComboBoxItem>Favourites Item #3</ComboBoxItem>
+                <ComboBoxItem>Favourites Item #4</ComboBoxItem>
+                <ComboBoxItem>Favourites Item #5</ComboBoxItem>
             </ComboBox>
             <ComboBox Name="HistoryBox" Visibility="Hidden">
                 <ComboBoxItem>History Item #1</ComboBoxItem>
                 <ComboBoxItem IsSelected="True">History Item #2</ComboBoxItem>
                 <ComboBoxItem>History Item #3</ComboBoxItem>
+                <ComboBoxItem>History Item #4</ComboBoxItem>
+                <ComboBoxItem>History Item #5</ComboBoxItem>
             </ComboBox>
-            <Button Grid.Column="1" Content="SEARCH" Margin="5" Click="Button_Click"/>
-            <Button Grid.Column="2" Content="Favourites" Margin="5" Click="Favourites_Click"/>
-            <Button Grid.Column="3" Content="history" Margin="5" Click="History_Click"/>
+            <Button Grid.Column="1" Content="Search"  Click="searchClick"/>
+            <Button Grid.Column="2" Content="Favourites" Click="favouritesClick"/>
+            <Button Grid.Column="3" Content="History" Click="historyClick"/>
 
         </Grid>
         <Button Grid.Row="1" Grid.ColumnSpan="5">Ovde ide za danasnji dan</Button>
