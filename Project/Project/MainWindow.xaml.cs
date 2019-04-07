@@ -24,12 +24,24 @@ namespace Project
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private String currentLocation = "";
+        private string currentLocation = "";
+        public string currentCity = "";
         private Weather weather;
-        
-        public CurrentWeather CurrentWeather
+
+        private CurrentWeather _CurrentWeather
         {
             get; set;
+        }
+
+        public CurrentWeather CurrentWeather
+        {
+            get { return _CurrentWeather; }
+            set { if (_CurrentWeather != value)
+                {
+                    _CurrentWeather = value;
+                    OnPropertyChanged();
+                }
+                } 
         }
 
         public ObservableCollection<HourTemp> HoursTemp
@@ -60,16 +72,19 @@ namespace Project
                     int ind = data.date_time.IndexOf(" ");
                     string date_time = data.date_time;
                     ht.hour = date_time.Substring(ind + 1,5);
-                    ht.temp = ((int)data.data.temp).ToString() + "°C";
+                    ht.temp = ((int)Double.Parse(data.data.temp)) + "°C";
                     ht.img = "http://openweathermap.org/img/w/" + data.conditions[0].icon + ".png";
                     HoursTemp.Add(ht);
                 }
 
                 CurrentWeather currentWeather = await ApiProcessor.LoadCurrentWeather(location);
                 string img = "http://openweathermap.org/img/w/" + currentWeather.conditions[0].icon + ".png";
+                currentWeather.conditions[0].icon = img;
+                string temp =((int)Double.Parse(currentWeather.data.temp)) + "°C";
+                currentWeather.data.temp = temp;
                 CurrentWeather = currentWeather;
-                CurrentWeather.conditions[0].icon = img;
-          
+                
+
                 Thread.Sleep(TimeSpan.FromMinutes(3));
             }
         }
@@ -78,6 +93,7 @@ namespace Project
         {
             var city = await ApiProcessor.LoadLocation();
             currentLocation = city.city;
+
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
