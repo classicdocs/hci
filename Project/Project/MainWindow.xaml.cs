@@ -25,8 +25,19 @@ namespace Project
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private string currentLocation = "";
-        public string currentCity = "";
         private Weather weather;
+
+        private string _currentCity { get; set; }
+        public string currentCity
+        {
+            get { return _currentCity; }
+            set { if (_currentCity != value)
+                    {
+                        _currentCity = value;
+                        OnPropertyChanged();
+                    }
+                }
+        }
 
         private CurrentWeather _CurrentWeather
         {

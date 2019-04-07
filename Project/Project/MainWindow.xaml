@@ -8,15 +8,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" MinHeight="600" MinWidth="800">
     
-    
-
-
     <Window.Resources>
-        
-            
         <Image x:Key="MyImage" Source="Resources/search-icon-large.png"/>
             
-        
         <DataTemplate x:Key="HourTempTemplate">
             <Border Grid.Column="7" BorderBrush="Gray" BorderThickness="1" Margin="1">
                 <Grid Grid.Row="0">
@@ -101,17 +95,16 @@
                 <ComboBoxItem>Item #4</ComboBoxItem>
                 <ComboBoxItem>Item #5</ComboBoxItem>
             </ComboBox>
-            <TextBox Grid.Column="3" Name="searchBox" Text="search" BorderBrush="Gray" Margin="5"/>
+            <TextBox Grid.Column="3" Text="{Binding _currentCity}" Name="searchBox" BorderBrush="Gray" Margin="5"/>
             
             <!--<Button Grid.Column="3" Content="{StaticResource MyImage}"  Click="searchClick" BorderBrush="Gray" Margin="5"/>
             -->
-            <Button Grid.Column="4" x:Name="btnsearchBox16x16" Click="searchClick">
+            <Button Grid.Column="4" x:Name="btnsearchBox16x16" Click="searchClick" Margin="5">
                 <Button.Template>
                     <ControlTemplate>
                         <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
                             <Image Source="Resources/search-icon-large.png" 
-                               Width="50" 
-                               Height="50"/>
+                               />
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
