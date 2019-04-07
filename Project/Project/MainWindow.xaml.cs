@@ -110,37 +110,17 @@ namespace Project
 
         private void searchClick(object sender, RoutedEventArgs e)
         {
-            searchBox.Visibility = Visibility.Visible;
-            MyFavouritesBox.Visibility = Visibility.Hidden;
-            HistoryBox.Visibility = Visibility.Hidden;
+            //TODO binding
+            if (searchBox.Visibility == Visibility.Hidden)
+            {
+                searchBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                searchBox.Visibility = Visibility.Hidden;
+            }
             
         }
-        private void favouritesClick(object sender, RoutedEventArgs e)
-        {
-            if (MyFavouritesBox.Visibility == Visibility.Visible)
-            {
-                MyFavouritesBox.Visibility = Visibility.Hidden;
-
-            }
-            else
-            {
-                MyFavouritesBox.Visibility = Visibility.Visible;
-                HistoryBox.Visibility = Visibility.Hidden;
-            }
-        }
-        private void historyClick(object sender, RoutedEventArgs e)
-        {
-            if (HistoryBox.Visibility == Visibility.Visible)
-            {
-                HistoryBox.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                HistoryBox.Visibility = Visibility.Visible;
-                MyFavouritesBox.Visibility = Visibility.Hidden;
-            }
-        }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
