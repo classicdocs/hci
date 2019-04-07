@@ -7,6 +7,16 @@ using Newtonsoft.Json;
 
 namespace Project
 {
+    public class CurrentWeather
+    {
+        [JsonProperty("name")]
+        public string city { get; set; }
+        [JsonProperty("weather")]
+        public List<Condition> conditions { get; set; }
+        [JsonProperty("main")]
+        public Data data { get; set; }
+    }
+
     public class Weather
     {
         [JsonProperty("list")]
@@ -17,13 +27,13 @@ namespace Project
     
     public class DataForHour
     {
-        public String dt { get; set; }
+        public string dt { get; set; }
         [JsonProperty("main")]
         public Data data { get; set; }
         [JsonProperty("weather")]
         public List<Condition> conditions { get; set; }
         [JsonProperty("dt_txt")]
-        public String date_time { get; set; } // Time
+        public string date_time { get; set; } // Time
     }
 
     public class Data
@@ -35,13 +45,13 @@ namespace Project
 
     public class Condition
     {
-        public String description { get; set; }
-        public String icon { get; set; }
+        public string description { get; set; }
+        public string icon { get; set; }
     }
 
     public class City
     {
-        public String name { get; set; }
-        public String country { get; set; }
+        public string name { get; set; }
+        public string country { get; set; }
     }
 }

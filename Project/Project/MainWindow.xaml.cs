@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,43 +13,78 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace Project
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private String currentLocation = "";
         private Weather weather;
+        
+        public CurrentWeather CurrentWeather
+        {
+            get; set;
+        }
+
+        public ObservableCollection<HourTemp> HoursTemp
+        {
+            get; set;
+        }
 
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
+            HoursTemp = new ObservableCollection<HourTemp>();
+            CurrentWeather = new CurrentWeather();
             ApiHandler.InitializeClient();
         }
 
-        private void LoadWeather()
+        private async void LoadWeather(Object obj)
         {
-            var weather =  ApiProcessor.LoadWeather(currentLocation);
+            string location = (String)obj;
+            while (true)
+            {
+                Weather weather = await ApiProcessor.LoadWeather(location);
+                var dataForHour = weather.dataForHour;
+                
+                foreach(var data in dataForHour)
+                {
+                    HourTemp ht = new HourTemp();
+                    int ind = data.date_time.IndexOf(" ");
+                    string date_time = data.date_time;
+                    ht.hour = date_time.Substring(ind + 1,5);
+                    ht.temp = ((int)data.data.temp).ToString() + "°C";
+                    ht.img = "http://openweathermap.org/img/w/" + data.conditions[0].icon + ".png";
+                    HoursTemp.Add(ht);
+                }
+
+                CurrentWeather currentWeather = await ApiProcessor.LoadCurrentWeather(location);
+                string img = "http://openweathermap.org/img/w/" + currentWeather.conditions[0].icon + ".png";
+                CurrentWeather = currentWeather;
+                CurrentWeather.conditions[0].icon = img;
+          
+                Thread.Sleep(TimeSpan.FromMinutes(3));
+            }
         }
 
         private async Task LoadLocation()
         {
             var city = await ApiProcessor.LoadLocation();
             currentLocation = city.city;
-            //location.Content = currentLocation;
-        }
-
-        private void refresh_click(object sender, RoutedEventArgs e)
-        {
-            LoadWeather();
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             await LoadLocation();
+            Thread thread = new Thread(new ParameterizedThreadStart(LoadWeather));
+            thread.Start(currentLocation);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -89,6 +125,12 @@ namespace Project
             }
         }
 
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
     }
 }
