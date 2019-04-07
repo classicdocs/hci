@@ -15,6 +15,8 @@ namespace Project
         public List<Condition> conditions { get; set; }
         [JsonProperty("main")]
         public Data data { get; set; }
+
+        public string dateUpdated { get; set; }
     }
 
     public class Weather
