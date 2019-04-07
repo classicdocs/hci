@@ -38,9 +38,9 @@ namespace Project
 
     public class Data
     {
-        public double temp { get; set; }
-        public double temp_max { get; set; }
-        public double temp_min { get; set; } 
+        public string temp { get; set; }
+        public string temp_max { get; set; }
+        public string temp_min { get; set; } 
     }
 
     public class Condition
