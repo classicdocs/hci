@@ -25,7 +25,6 @@ namespace Project
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private string currentLocation = "";
-        public string currentCity = "";
 
         Thread thread = null;
 
