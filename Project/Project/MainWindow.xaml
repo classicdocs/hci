@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Project"
         Loaded="Window_Loaded"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" MinHeight="600" MinWidth="800">
+        Title="MainWindow" Height="700" Width="800" MinHeight="700" MinWidth="800">
     
     <Window.Resources>
         <Image x:Key="MyImage" Source="Resources/search-icon-large.png"/>
@@ -29,16 +29,37 @@
             <Border Grid.Row="5" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="1">
                 <Grid Grid.Row="0" Grid.Column="4">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.4*"></RowDefinition>
+                        <RowDefinition Height="0.6*"></RowDefinition>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
-                        <RowDefinition Height="0.4*"></RowDefinition>
-                        <RowDefinition Height="0.2*"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="0.6*"></RowDefinition>
+                        <RowDefinition Height="0.1*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Content="{Binding day}"></Label>
-                    <Image Grid.Row="1" Source="{Binding img}"></Image>
-                    <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50" Content="{Binding temp}"></Label>
-                    <Button Grid.Row="3" Width="100" FontSize="15" Click="Button_Click">Hourly</Button>
+                    <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Content="{Binding date}"></Label>
+                    <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Day:</Label>
+                    <Image Grid.Row="1" Grid.Column="1" Source="{Binding img1}" HorizontalAlignment="Center"></Image>
+                    <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Night:</Label>
+                    <Image Grid.Row="2" Grid.Column="1" Source="{Binding img2}" HorizontalAlignment="Center"></Image>
+                    <Label Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Content="{Binding temp}"></Label>
+
+
+                    <Button Grid.Row="4" Width="50" Height="20" Click="hourlyClick" Tag="{Binding dayIndex}">Hourly</Button>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="DayHourTempTemplate">
+            <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="1" Margin="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="13" Content="{Binding hour}">
+                    </Label>
+                    <Image Grid.Column="1" Width="43" Height="43" VerticalAlignment="Center" Source="{Binding img}"></Image>
+                    <Label Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="13"  Content="{Binding temp}"></Label>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -56,6 +77,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.3*" />
             <RowDefinition Height="1.3*" />
             <RowDefinition Height="0.3*" />
             <RowDefinition Height="1.3*" />
@@ -110,26 +132,30 @@
                 </Button.Template>
             </Button>
         </Grid>
-        
-        
-        
-        <Grid Grid.Row="1" Grid.ColumnSpan="10">
+
+
+        <Label Grid.Row="1" Grid.Column="0">Current weather:</Label>
+        <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,2,2,0" HorizontalAlignment="Right">
+            <Label>Last time updated: </Label>
+            <Label Content="{Binding CurrentWeather.dateUpdated}"></Label> 
+            <Button Click="btn_update_click">Update</Button>
+        </StackPanel>
+        <Grid Grid.Row="2" Grid.ColumnSpan="10">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition Width="1.2*"></ColumnDefinition>
                 <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Image Grid.RowSpan="2" Source="{Binding CurrentWeather.conditions[0].icon}"></Image>
-            <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentWeather.city}"></Label>
-            <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentWeather.data.temp}"></Label>
-            <Button Grid.Column="2">3</Button>
+            <Image Grid.RowSpan="2" Source="{Binding CurrentWeather.conditions[0].icon}" HorizontalAlignment="Right" Margin="0,0,50,0"></Image>
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentWeather.city}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"></Label>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentWeather.data.temp}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40"></Label>
         </Grid>
-        <Label Grid.Row="2" Grid.ColumnSpan="10">Weather for the next 24 hours:</Label>
-        <Grid Grid.Row="3" Grid.ColumnSpan="10" Margin="5">
+        <Label Grid.Row="3" Grid.ColumnSpan="10">Weather for the next 24 hours:</Label>
+        <Grid Grid.Row="4" Grid.ColumnSpan="10" Margin="5,0,5,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
@@ -141,18 +167,18 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <ContentPresenter Grid.Row="3" Grid.Column="0" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[0]}"></ContentPresenter>
-            <ContentPresenter Grid.Row="3" Grid.Column="1" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[1]}"></ContentPresenter>
-            <ContentPresenter Grid.Row="3" Grid.Column="2" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[2]}"></ContentPresenter>
-            <ContentPresenter Grid.Row="3" Grid.Column="3" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[3]}"></ContentPresenter>
-            <ContentPresenter Grid.Row="3" Grid.Column="4" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[4]}"></ContentPresenter>
-            <ContentPresenter Grid.Row="3" Grid.Column="5" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[5]}"></ContentPresenter>
-            <ContentPresenter Grid.Row="3" Grid.Column="6" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[6]}"></ContentPresenter>
-            <ContentPresenter Grid.Row="3" Grid.Column="7" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[7]}"></ContentPresenter>
-            <ContentPresenter Grid.Row="3" Grid.Column="8" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[8]}"></ContentPresenter>
+            <ContentPresenter Grid.Row="4" Grid.Column="0" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[0]}"></ContentPresenter>
+            <ContentPresenter Grid.Row="4" Grid.Column="1" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[1]}"></ContentPresenter>
+            <ContentPresenter Grid.Row="4" Grid.Column="2" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[2]}"></ContentPresenter>
+            <ContentPresenter Grid.Row="4" Grid.Column="3" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[3]}"></ContentPresenter>
+            <ContentPresenter Grid.Row="4" Grid.Column="4" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[4]}"></ContentPresenter>
+            <ContentPresenter Grid.Row="4" Grid.Column="5" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[5]}"></ContentPresenter>
+            <ContentPresenter Grid.Row="4" Grid.Column="6" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[6]}"></ContentPresenter>
+            <ContentPresenter Grid.Row="4" Grid.Column="7" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[7]}"></ContentPresenter>
+            <ContentPresenter Grid.Row="4" Grid.Column="8" ContentTemplate="{StaticResource HourTempTemplate}" Content="{Binding HoursTemp[8]}"></ContentPresenter>
         </Grid>
-        <Label Grid.Row="4" Grid.ColumnSpan="10">Weather for the next 5 days:</Label>
-        <Grid Grid.Row="5" Grid.ColumnSpan="10" Margin="5">
+        <Label Grid.Row="5" Grid.ColumnSpan="10">Weather for the next 5 days:</Label>
+        <Grid Grid.Row="6" Grid.ColumnSpan="10" Margin="5,0,5,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
@@ -160,11 +186,132 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <ContentPresenter Grid.Row="5" Grid.Column="0" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding}"></ContentPresenter>
-            <ContentPresenter Grid.Row="5" Grid.Column="1" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding}"></ContentPresenter>
-            <ContentPresenter Grid.Row="5" Grid.Column="2" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding}"></ContentPresenter>
-            <ContentPresenter Grid.Row="5" Grid.Column="3" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding}"></ContentPresenter>
-            <ContentPresenter Grid.Row="5" Grid.Column="4" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding}"></ContentPresenter>
+            
+            <ContentPresenter Name="Day0" Grid.Row="6" Grid.Column="0" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding DaysTemp[0]}"></ContentPresenter>
+            <Grid Name="Day0Hours" Visibility="Hidden" Grid.Row="6" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="0.6*"/>
+                </Grid.RowDefinitions>
+                <ContentPresenter Grid.Row="0" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[0].hoursTemp[0]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[0].hoursTemp[1]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="2" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[0].hoursTemp[2]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="3" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[0].hoursTemp[3]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="4" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[0].hoursTemp[4]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="5" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[0].hoursTemp[5]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="6" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[0].hoursTemp[6]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="7" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[0].hoursTemp[7]}"></ContentPresenter>
+                <Button Grid.Row="8" HorizontalAlignment="Center" Width="50" Click="closeDay0">Back</Button>
+            </Grid>
+            
+            <ContentPresenter Name="Day1" Grid.Row="6" Grid.Column="1" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding DaysTemp[1]}"></ContentPresenter>
+            <Grid Name="Day1Hours" Visibility="Hidden" Grid.Row="6" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="0.6*"/>
+                </Grid.RowDefinitions>
+                <ContentPresenter Grid.Row="0" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[1].hoursTemp[0]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[1].hoursTemp[1]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="2" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[1].hoursTemp[2]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="3" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[1].hoursTemp[3]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="4" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[1].hoursTemp[4]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="5" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[1].hoursTemp[5]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="6" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[1].hoursTemp[6]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="7" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[1].hoursTemp[7]}"></ContentPresenter>
+                <Button Grid.Row="8" HorizontalAlignment="Center" Width="50" Click="closeDay1">Back</Button>
+            </Grid>
+            
+            <ContentPresenter Name="Day2" Grid.Row="6" Grid.Column="2" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding DaysTemp[2]}"></ContentPresenter>
+            <Grid Name="Day2Hours" Visibility="Hidden" Grid.Row="6" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="0.6*"/>
+                </Grid.RowDefinitions>
+                <ContentPresenter Grid.Row="0" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[2].hoursTemp[0]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[2].hoursTemp[1]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="2" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[2].hoursTemp[2]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="3" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[2].hoursTemp[3]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="4" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[2].hoursTemp[4]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="5" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[2].hoursTemp[5]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="6" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[2].hoursTemp[6]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="7" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[2].hoursTemp[7]}"></ContentPresenter>
+                <Button Grid.Row="8" HorizontalAlignment="Center" Width="50" Click="closeDay2">Back</Button>
+            </Grid>
+            
+            <ContentPresenter Name="Day3" Grid.Row="6" Grid.Column="3" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding DaysTemp[3]}"></ContentPresenter>
+            <Grid Name="Day3Hours" Visibility="Hidden" Grid.Row="6" Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="0.6*"/>
+                </Grid.RowDefinitions>
+                <ContentPresenter Grid.Row="0" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[3].hoursTemp[0]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[3].hoursTemp[1]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="2" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[3].hoursTemp[2]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="3" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[3].hoursTemp[3]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="4" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[3].hoursTemp[4]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="5" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[3].hoursTemp[5]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="6" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[3].hoursTemp[6]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="7" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[3].hoursTemp[7]}"></ContentPresenter>
+                <Button Grid.Row="8" HorizontalAlignment="Center" Width="50" Click="closeDay3">Back</Button>
+            </Grid>
+            
+            
+            <ContentPresenter Name="Day4" Grid.Row="6" Grid.Column="4" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding DaysTemp[4]}"></ContentPresenter>
+            <Grid Name="Day4Hours" Visibility="Hidden" Grid.Row="6" Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="0.6*"/>
+                </Grid.RowDefinitions>
+                <ContentPresenter Grid.Row="0" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[4].hoursTemp[0]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[4].hoursTemp[1]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="2" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[4].hoursTemp[2]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="3" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[4].hoursTemp[3]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="4" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[4].hoursTemp[4]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="5" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[4].hoursTemp[5]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="6" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[4].hoursTemp[6]}"></ContentPresenter>
+                <ContentPresenter Grid.Row="7" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[4].hoursTemp[7]}"></ContentPresenter>
+                <Button Grid.Row="8" HorizontalAlignment="Center" Width="50" Click="closeDay4">Back</Button>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
