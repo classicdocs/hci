@@ -6,11 +6,13 @@
         xmlns:local="clr-namespace:Project"
         Loaded="Window_Loaded"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="800" MinHeight="700" MinWidth="800">
-    
+        Title="WeatherApp" Height="700" Width="800" MinHeight="700" MinWidth="800"
+        Icon="Resources/ApplicationLogo.png">
+
     <Window.Resources>
-        <Image x:Key="MyImage" Source="Resources/search-icon-large.png"/>
-            
+        <Image x:Key="SearchIcon" Source="Resources/search-icon-large.png"/>
+        <ImageBrush  x:Key="NotFavouriteIcon" ImageSource="Resources/NotFavourite.png"/>
+        <ImageBrush  x:Key="FavouriteIcon" ImageSource="Resources/Favourite.png"/>
         <DataTemplate x:Key="HourTempTemplate">
             <Border Grid.Column="7" BorderBrush="Gray" BorderThickness="1" Margin="1">
                 <Grid Grid.Row="0">
@@ -64,10 +66,8 @@
             </Border>
         </DataTemplate>
     </Window.Resources>
-    
+
     <Grid>
-        
-        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
@@ -84,62 +84,55 @@
             <RowDefinition Height="0.3*" />
             <RowDefinition Height="2.7*" />
         </Grid.RowDefinitions>
-        
-        
+
         <!-- TOP MENI - Sadrzi padajucu listu za favourites, history, input field za pretragu i dugme search za pretragu -->
         <Grid Grid.ColumnSpan="5" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="5">
-            
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="0.25*" />
-            </Grid.ColumnDefinitions>
-
-            <ComboBox Grid.Column="0" Name="MyFavouritesBox" BorderBrush="Gray" Margin="5">
-                <ComboBoxItem IsSelected="True">Favourites</ComboBoxItem>
-                <ComboBoxItem>Item #1</ComboBoxItem>
-                <ComboBoxItem>Item #2</ComboBoxItem>
-                <ComboBoxItem>Item #3</ComboBoxItem>
-                <ComboBoxItem>Item #4</ComboBoxItem>
-                <ComboBoxItem>Item #5</ComboBoxItem>
-            </ComboBox>
-            <ComboBox Grid.Column="1" Name="HistoryBox" BorderBrush="Gray" Margin="5">
-                <ComboBoxItem IsSelected="True">History</ComboBoxItem>
-                <ComboBoxItem>Item #1</ComboBoxItem>
-                <ComboBoxItem>Item #2</ComboBoxItem>
-                <ComboBoxItem>Item #3</ComboBoxItem>
-                <ComboBoxItem>Item #4</ComboBoxItem>
-                <ComboBoxItem>Item #5</ComboBoxItem>
-            </ComboBox>
-            <TextBox Grid.Column="3" Text="{Binding _currentCity}" Name="searchBox" BorderBrush="Gray" Margin="5"/>
-            
-            <!--<Button Grid.Column="3" Content="{StaticResource MyImage}"  Click="searchClick" BorderBrush="Gray" Margin="5"/>
-            -->
-            <Button Grid.Column="4" x:Name="btnsearchBox16x16" Click="searchClick" Margin="5">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
-                            <Image Source="Resources/search-icon-large.png" 
-                               />
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+            <Menu Background="LightBlue">
+                <Menu.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid/>
+                    </ItemsPanelTemplate>
+                </Menu.ItemsPanel>
+                <MenuItem Header="Search" HorizontalAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="searchBox" Text="{Binding _currentCity}" Width="150"/>
+                        <Button Content="Search" />
+                    </StackPanel>
+                </MenuItem>
+                <MenuItem Header="_Favourites" HorizontalAlignment="Center">
+                    <MenuItem Header="_Item #1"></MenuItem>
+                    <MenuItem Header="_Item #2"></MenuItem>
+                    <MenuItem Header="_Item #3"></MenuItem>
+                    <MenuItem Header="_Item #4"></MenuItem>
+                    <MenuItem Header="_Item #4"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_History" HorizontalAlignment="Right">
+                    <MenuItem Header="_Item #1"></MenuItem>
+                    <MenuItem Header="_Item #2"></MenuItem>
+                    <MenuItem Header="_Item #3"></MenuItem>
+                    <MenuItem Header="_Item #4"></MenuItem>
+                    <MenuItem Header="_Item #4"></MenuItem>
+                </MenuItem>
+            </Menu>
         </Grid>
 
 
         <Label Grid.Row="1" Grid.Column="0">Current weather:</Label>
         <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,2,2,0" HorizontalAlignment="Right">
-            <Label>Last time updated: </Label>
-            <Label Content="{Binding CurrentWeather.dateUpdated}"></Label> 
+            <Label>Last time updated:</Label>
+            <Label Content="{Binding CurrentWeather.dateUpdated}"></Label>
             <Button Click="btn_update_click">Update</Button>
         </StackPanel>
+        <!-- Janko dodao -->
+        <StackPanel Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,2,2,0" HorizontalAlignment="Right">
+            <Button Background="{StaticResource NotFavouriteIcon}"
+                    VerticalAlignment="Bottom" Margin="3" Name="addToFavBtn" IsDefault="True"
+                    Width="25" Height="25" Click="addToFavoritesClick" BorderBrush="White">
+                <Button.ToolTip>Add to favourites</Button.ToolTip>
+            </Button>
+        </StackPanel>
+        <!-- Janko dodao -->
+
         <Grid Grid.Row="2" Grid.ColumnSpan="10">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -153,6 +146,7 @@
             <Image Grid.RowSpan="2" Source="{Binding CurrentWeather.conditions[0].icon}" HorizontalAlignment="Right" Margin="0,0,50,0"></Image>
             <Label Grid.Row="0" Grid.Column="1" Content="{Binding CurrentWeather.city}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="30"></Label>
             <Label Grid.Row="1" Grid.Column="1" Content="{Binding CurrentWeather.data.temp}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="40"></Label>
+            
         </Grid>
         <Label Grid.Row="3" Grid.ColumnSpan="10">Weather for the next 24 hours:</Label>
         <Grid Grid.Row="4" Grid.ColumnSpan="10" Margin="5,0,5,5">
@@ -186,7 +180,7 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            
+
             <ContentPresenter Name="Day0" Grid.Row="6" Grid.Column="0" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding DaysTemp[0]}"></ContentPresenter>
             <Grid Name="Day0Hours" Visibility="Hidden" Grid.Row="6" Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -211,7 +205,7 @@
                 <ContentPresenter Grid.Row="7" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[0].hoursTemp[7]}"></ContentPresenter>
                 <Button Grid.Row="8" HorizontalAlignment="Center" Width="50" Click="closeDay0">Back</Button>
             </Grid>
-            
+
             <ContentPresenter Name="Day1" Grid.Row="6" Grid.Column="1" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding DaysTemp[1]}"></ContentPresenter>
             <Grid Name="Day1Hours" Visibility="Hidden" Grid.Row="6" Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -236,7 +230,7 @@
                 <ContentPresenter Grid.Row="7" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[1].hoursTemp[7]}"></ContentPresenter>
                 <Button Grid.Row="8" HorizontalAlignment="Center" Width="50" Click="closeDay1">Back</Button>
             </Grid>
-            
+
             <ContentPresenter Name="Day2" Grid.Row="6" Grid.Column="2" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding DaysTemp[2]}"></ContentPresenter>
             <Grid Name="Day2Hours" Visibility="Hidden" Grid.Row="6" Grid.Column="2">
                 <Grid.RowDefinitions>
@@ -261,7 +255,7 @@
                 <ContentPresenter Grid.Row="7" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[2].hoursTemp[7]}"></ContentPresenter>
                 <Button Grid.Row="8" HorizontalAlignment="Center" Width="50" Click="closeDay2">Back</Button>
             </Grid>
-            
+
             <ContentPresenter Name="Day3" Grid.Row="6" Grid.Column="3" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding DaysTemp[3]}"></ContentPresenter>
             <Grid Name="Day3Hours" Visibility="Hidden" Grid.Row="6" Grid.Column="3">
                 <Grid.RowDefinitions>
@@ -286,8 +280,8 @@
                 <ContentPresenter Grid.Row="7" ContentTemplate="{StaticResource DayHourTempTemplate}" Content="{Binding DaysTemp[3].hoursTemp[7]}"></ContentPresenter>
                 <Button Grid.Row="8" HorizontalAlignment="Center" Width="50" Click="closeDay3">Back</Button>
             </Grid>
-            
-            
+
+
             <ContentPresenter Name="Day4" Grid.Row="6" Grid.Column="4" ContentTemplate="{StaticResource DayTempTemplate}" Content="{Binding DaysTemp[4]}"></ContentPresenter>
             <Grid Name="Day4Hours" Visibility="Hidden" Grid.Row="6" Grid.Column="4">
                 <Grid.RowDefinitions>

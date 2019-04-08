@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using System.Windows.Resources;
 
 namespace Project
 {
@@ -24,6 +25,11 @@ namespace Project
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+
+        private ImageBrush favouriteImg = new ImageBrush();
+        private ImageBrush notFavouriteImg = new ImageBrush();
+
+        
         private string currentLocation = "";
 
         Thread thread = null;
@@ -68,12 +74,29 @@ namespace Project
 
         public MainWindow()
         {
+            InitialiseIcons();
             InitializeComponent();
             DataContext = this;
             HoursTemp = new ObservableCollection<HourTemp>();
             DaysTemp = new ObservableCollection<DayTemp>();
             CurrentWeather = new CurrentWeather();
             ApiHandler.InitializeClient();
+        }
+
+        private void InitialiseIcons()
+        {
+            Uri favouriteUri = new Uri("Resources/Favourite.png", UriKind.Relative);
+            Uri notFavouriteUri = new Uri("Resources/NotFavourite.png", UriKind.Relative);
+
+            StreamResourceInfo streamFavourite = Application.GetResourceStream(favouriteUri);
+            StreamResourceInfo streamNotFavourite = Application.GetResourceStream(notFavouriteUri);
+
+            BitmapFrame favouriteFrame = BitmapFrame.Create(streamFavourite.Stream);
+            BitmapFrame notFavouriteFrame = BitmapFrame.Create(streamNotFavourite.Stream);
+
+            
+            this.favouriteImg.ImageSource = favouriteFrame;
+            this.notFavouriteImg.ImageSource = notFavouriteFrame;
         }
 
         private async void LoadWeather(Object obj)
@@ -260,15 +283,21 @@ namespace Project
         private void searchClick(object sender, RoutedEventArgs e)
         {
             //TODO binding
-            if (searchBox.Visibility == Visibility.Hidden)
+        }
+        private void addToFavoritesClick(object sender, RoutedEventArgs e)
+        {
+            if (addToFavBtn.IsDefault)
             {
-                searchBox.Visibility = Visibility.Visible;
+                addToFavBtn.Background = this.favouriteImg;
+                addToFavBtn.IsDefault = !addToFavBtn.IsDefault;
             }
             else
             {
-                searchBox.Visibility = Visibility.Hidden;
+                addToFavBtn.Background = this.notFavouriteImg;
+                addToFavBtn.IsDefault = !addToFavBtn.IsDefault;
             }
-            
+
+            //TODO dodaj grad u favourites
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
