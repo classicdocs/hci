@@ -110,6 +110,7 @@ namespace Project
                 dt.hoursTemp = new List<HourTemp>();
                 double max_temp = -100;
                 double min_temp = 100;
+                dt.dayIndex = i.ToString();
                 for (int j = 0; j < 8; j++)
                 {
                     int idx = index + i * 8 + j;
@@ -192,9 +193,68 @@ namespace Project
             startNewThread();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void hourlyClick(object sender, RoutedEventArgs e)
         {
-            
+            var dayIndex = ((Button)sender).Tag;
+            if (dayIndex.Equals("0"))
+            {
+                Day0Hours.Visibility = Visibility.Visible;
+                Day0.Visibility = Visibility.Hidden;
+            }
+
+            if (dayIndex.Equals("1"))
+            {
+                Day1Hours.Visibility = Visibility.Visible;
+                Day1.Visibility = Visibility.Hidden;
+            }
+
+            if (dayIndex.Equals("2"))
+            {
+                Day2Hours.Visibility = Visibility.Visible;
+                Day2.Visibility = Visibility.Hidden;
+            }
+
+            if (dayIndex.Equals("3"))
+            {
+                Day3Hours.Visibility = Visibility.Visible;
+                Day3.Visibility = Visibility.Hidden;
+            }
+
+            if (dayIndex.Equals("4"))
+            {
+                Day4Hours.Visibility = Visibility.Visible;
+                Day4.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void closeDay0(object sender, RoutedEventArgs e)
+        {
+            Day0Hours.Visibility = Visibility.Hidden;
+            Day0.Visibility = Visibility.Visible;
+        }
+
+        private void closeDay1(object sender, RoutedEventArgs e)
+        {
+            Day1Hours.Visibility = Visibility.Hidden;
+            Day1.Visibility = Visibility.Visible;
+        }
+
+        private void closeDay2(object sender, RoutedEventArgs e)
+        {
+            Day2Hours.Visibility = Visibility.Hidden;
+            Day2.Visibility = Visibility.Visible;
+        }
+
+        private void closeDay3(object sender, RoutedEventArgs e)
+        {
+            Day3Hours.Visibility = Visibility.Hidden;
+            Day3.Visibility = Visibility.Visible;
+        }
+
+        private void closeDay4(object sender, RoutedEventArgs e)
+        {
+            Day4Hours.Visibility = Visibility.Hidden;
+            Day4.Visibility = Visibility.Visible;
         }
 
         private void searchClick(object sender, RoutedEventArgs e)
