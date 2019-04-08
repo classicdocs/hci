@@ -14,5 +14,6 @@ namespace Project
         public List<HourTemp> hoursTemp { get; set; }
         public string img1 { get; set; }
         public string img2 { get; set; }
+        public string dayIndex { get; set; }
     }
 }
