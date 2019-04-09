@@ -95,8 +95,8 @@
                 </Menu.ItemsPanel>
                 <MenuItem Header="Search" HorizontalAlignment="Left">
                     <StackPanel Orientation="Horizontal">
-                        <TextBox x:Name="searchBox" Text="{Binding _currentCity}" Width="150"/>
-                        <Button Content="Search" />
+                        <TextBox x:Name="searchBox" Text="{Binding currentCity, Mode=TwoWay}" Width="150"/>
+                        <Button Content="Search" Click="searchClick"/>
                     </StackPanel>
                 </MenuItem>
                 <MenuItem Header="_Favourites" HorizontalAlignment="Center">
