@@ -280,6 +280,28 @@ namespace Project
                 DaysTemp.Add(dt);
                 if (end) break;
             }
+            int x = DaysTemp[4].hoursTemp.Count;
+            if (x != 8)
+            {
+                for (int i = x; i < DaysTemp[3].hoursTemp.Count; i++)
+                {
+                    HourTemp ht = new HourTemp();
+                    ht = DaysTemp[3].hoursTemp[i];
+                    DaysTemp[4].hoursTemp.Add(ht);
+                }
+                if (DaysTemp[4].img1 == null)
+                {
+                    DaysTemp[4].img1 = DaysTemp[3].img1;
+                } else if (DaysTemp[4].img2 == null)
+                {
+                    DaysTemp[4].img2 = DaysTemp[3].img2;
+                }
+                if (DaysTemp[4].temp.Equals("-100/100"))
+                {
+                    DaysTemp[4].temp = DaysTemp[3].temp;
+                }
+            }
+
             Console.Write("");
 
         }
