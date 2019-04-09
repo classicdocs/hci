@@ -65,6 +65,7 @@
     </ApplicationDefinition>
     <Compile Include="DayTemp.cs" />
     <Compile Include="HourTemp.cs" />
+    <Compile Include="MyException.cs" />
     <Compile Include="Weather.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
