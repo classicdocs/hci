@@ -1,1 +1,1 @@
-Belgrade,Novi Sad,Zagreb,Begec
+Belgrade,Zagreb,Begec,Novi Sad,Nis

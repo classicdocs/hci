@@ -70,4 +70,3 @@ E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\MainWindo
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.g.resources
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.Properties.Resources.resources
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.csproj.GenerateResource.Cache
-E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.csprojResolveAssemblyReference.cache

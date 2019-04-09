@@ -12,6 +12,7 @@
     <Window.Resources>
         <Image x:Key="SearchIcon" Source="Resources/search-icon-large.png"/>
         <Image x:Key="RefreshIcon" Source="Resources/baseline_sync_black_18dp.png"/>
+        <Image x:Key="HomeIcon" Source="Resources/home.png"/>
         <ImageBrush  x:Key="NotFavouriteIcon" ImageSource="Resources/NotFavourite.png"/>
         <ImageBrush  x:Key="FavouriteIcon" ImageSource="Resources/Favourite.png"/>
         <DataTemplate x:Key="HourTempTemplate">
@@ -88,7 +89,7 @@
         </Grid.RowDefinitions>
 
         <!-- TOP MENI - Sadrzi padajucu listu za favourites, history, input field za pretragu i dugme search za pretragu -->
-        <Grid Grid.ColumnSpan="5" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="5">
+        <Grid Grid.ColumnSpan="4" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="5">
             <Menu Background="LightBlue">
                 <Menu.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -96,9 +97,9 @@
                     </ItemsPanelTemplate>
                 </Menu.ItemsPanel>
                 <MenuItem Header="Search" Margin="5">
-                    <StackPanel Orientation="Horizontal" >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <TextBox x:Name="searchBox" Text="{Binding currentCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Width="150" KeyDown="OnKeyDownHandler"/>
+                                 Width="150" KeyDown="OnKeyDownHandler" PreviewTextInput="TextSearchValidation"/>
                         <Button Content="Search" Click="searchClick"/>
                     </StackPanel>
                 </MenuItem>
@@ -119,14 +120,20 @@
                 <MenuItem IsEnabled ="False"></MenuItem>
             </Menu>
         </Grid>
-
-
+        <!--HOME DUGME, nece da se rasiri preko cele pete kolone pa to ti je-->
+        <StackPanel Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,2,2,0" HorizontalAlignment="Center">
+            <Button Margin="3" Name="homeBtn" Click="homeBtnClick" Content="{StaticResource HomeIcon}"
+                    BorderBrush="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto">
+                <Button.ToolTip>Go to home location</Button.ToolTip>
+            </Button>
+        </StackPanel>
         <Label Grid.Row="1" Grid.Column="0">Current weather:</Label>
         <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,2,2,0" HorizontalAlignment="Right">
             <Label>Last time updated:</Label>
             <Label Content="{Binding CurrentWeather.dateUpdated}"></Label>
             <Button Click="btn_update_click" Content="{StaticResource RefreshIcon}"></Button>
         </StackPanel>
+        
         <!-- Janko dodao -->
         <StackPanel Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,2,2,0" HorizontalAlignment="Right">
             <Button Background="{StaticResource NotFavouriteIcon}"

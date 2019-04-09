@@ -18,6 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using System.Windows.Resources;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Project
 {
@@ -447,19 +448,24 @@ namespace Project
             startNewThread();
         }
 
+        private void TextSearchValidation(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^a-z A-Z]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
 
         private void changeFavouritesIcon()
         {
             if (!this.favouriteCities.Contains(_currentCity))
             {
                 addToFavBtn.Background = this.notFavouriteImg;
-                addToFavBtn.ToolTip = "Remove from favourites";
+                addToFavBtn.ToolTip = "Add to favourites";
                 isFavourite = true;
             }
             else
             {
-                addToFavBtn.Background = this.favouriteImg;
-                addToFavBtn.ToolTip = "Add to favourites";
+                addToFavBtn.Background = this.favouriteImg; 
+                addToFavBtn.ToolTip = "Remove from favourites";
                 isFavourite = false;
             }
         }
@@ -576,6 +582,15 @@ namespace Project
         private void hist_3_Click(object sender, RoutedEventArgs e) { moveToHist(3); }
         private void hist_4_Click(object sender, RoutedEventArgs e) { moveToHist(4); }
 
+        private void homeBtnClick(object sender, RoutedEventArgs e)
+        {
+            this._currentCity = currentLocation;
+            changeFavouritesIcon();
+            this.thread.Abort();
+            startNewThread();
+        }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -593,5 +608,6 @@ namespace Project
             thread = new Thread(new ParameterizedThreadStart(LoadWeather));
             thread.Start(_currentCity);
         }
+
     }
 }
