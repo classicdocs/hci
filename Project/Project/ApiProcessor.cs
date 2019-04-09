@@ -25,35 +25,60 @@ namespace Project
             //url = $"http://api.ipstack.com/" + myIP + "?access_key=" + key;
             url = $"http://api.ipstack.com/24.135.247.78" + "?access_key=" + API_KEY_LOCATION;
 
-            using (HttpResponseMessage response = await ApiHandler.ApiClient.GetAsync(url))
+            try
             {
-                if (response.IsSuccessStatusCode)
+                using (HttpResponseMessage response = await ApiHandler.ApiClient.GetAsync(url))
                 {
-                    CurrentLocation location = await response.Content.ReadAsAsync<CurrentLocation>();
-                    return location;
-                }
-                else
-                {
-                    throw new Exception(response.ReasonPhrase);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        CurrentLocation location = await response.Content.ReadAsAsync<CurrentLocation>();
+                        return location;
+                    }
+                    else
+                    {
+                        throw new Exception(response.ReasonPhrase);
+                    }
                 }
             }
+            catch (MyException e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                String msg = "Unable to get current location. Please check your Internet connection.";
+                throw new MyException(msg);
+            }
+            
         }
 
-        public static async Task<Weather> LoadWeather(string currentLocation)
+        public static async Task<Weather> LoadWeather(string location)
         {
-            string url = "http://api.openweathermap.org/data/2.5/forecast?q=" + currentLocation + "&mode=json&units=metric";
+            string url = "http://api.openweathermap.org/data/2.5/forecast?q=" + location + "&mode=json&units=metric";
             url += "&APPID=" + API_KEY_WEATHER;
-            using (HttpResponseMessage response = await ApiHandler.ApiClient.GetAsync(url))
+            try
             {
-                if (response.IsSuccessStatusCode)
+                using (HttpResponseMessage response = await ApiHandler.ApiClient.GetAsync(url))
                 {
-                    Weather weather = await response.Content.ReadAsAsync<Weather>();
-                    return weather;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Weather weather = await response.Content.ReadAsAsync<Weather>();
+                        return weather;
+                    }
+                    else
+                    {
+                        String msg = "City you want to search '" + location + "' doesn't exist! Please try again.";
+                        throw new MyException(msg);
+                    }
                 }
-                else
-                {
-                    throw new Exception(response.ReasonPhrase);
-                }
+            } catch (MyException e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                String msg = "Unable to get weather data. Please check your Internet connection.";
+                throw new MyException(msg);
             }
         }
 
@@ -61,18 +86,32 @@ namespace Project
         {
             string url = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "&mode=json&units=metric";
             url += "&APPID=" + API_KEY_WEATHER;
-            using (HttpResponseMessage response = await ApiHandler.ApiClient.GetAsync(url))
+            try
             {
-                if (response.IsSuccessStatusCode)
+                using (HttpResponseMessage response = await ApiHandler.ApiClient.GetAsync(url))
                 {
-                    CurrentWeather weather = await response.Content.ReadAsAsync<CurrentWeather>();
-                    return weather;
-                }
-                else
-                {
-                    throw new Exception(response.ReasonPhrase);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        CurrentWeather weather = await response.Content.ReadAsAsync<CurrentWeather>();
+                        return weather;
+                    }
+                    else
+                    {
+                        String msg = "City you want to search '" + location + "' doesn't exist! Please try again.";
+                        throw new MyException(msg);
+                    }
                 }
             }
+            catch (MyException e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                String msg = "Unable to get weather data. Please check your Internet connection.";
+                throw new MyException(msg);
+            }
+            
         }
     }
 }

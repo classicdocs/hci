@@ -211,12 +211,30 @@ namespace Project
             string location = (String)obj;
             while (true)
             {
-                HoursTemp.Clear();
-                DaysTemp.Clear();
-                Weather weather = await ApiProcessor.LoadWeather(location);
-                setHoursTemp(weather);
-                setCurrentTemp(weather, location);
-                setDaysTemp(weather);
+                Weather weather = null;
+                try
+                {
+                    weather = await ApiProcessor.LoadWeather(location);
+                    HoursTemp.Clear();
+                    DaysTemp.Clear();
+                    setHoursTemp(weather);
+                    setCurrentTemp(weather, location);
+                    setDaysTemp(weather);
+                } catch (MyException e)
+                {
+                    location = currentLocation;
+                    _currentCity = location;
+                    weather = await ApiProcessor.LoadWeather(location);
+                    HoursTemp.Clear();
+                    DaysTemp.Clear();
+                    setHoursTemp(weather);
+                    setCurrentTemp(weather, location);
+                    setDaysTemp(weather);
+                    MessageBox.Show(e.Message, "Error");
+                } catch (Exception e)
+                {
+
+                }
 
                 Thread.Sleep(TimeSpan.FromMinutes(30));
             }
@@ -326,7 +344,15 @@ namespace Project
         // metoda za podesavanje trenutne temperature
         private async void setCurrentTemp(Weather weather, String location)
         {
-            CurrentWeather currentWeather = await ApiProcessor.LoadCurrentWeather(location);
+            CurrentWeather currentWeather = null;
+            try
+            {
+                currentWeather = await ApiProcessor.LoadCurrentWeather(location);
+            } catch (Exception e)
+            {
+                currentWeather = await ApiProcessor.LoadCurrentWeather("Novi Sad");
+            }
+            
             string img = "http://openweathermap.org/img/w/" + currentWeather.conditions[0].icon + ".png";
             currentWeather.conditions[0].icon = img;
             string temp = ((int)Double.Parse(currentWeather.data.temp)) + "°C";
@@ -338,7 +364,19 @@ namespace Project
 
         private async Task LoadLocation()
         {
-            var city = await ApiProcessor.LoadLocation();
+            CurrentLocation city = null;
+            try
+            {
+                city = await ApiProcessor.LoadLocation();
+            } catch (MyException e)
+            {
+                MessageBox.Show(e.Message, "Error");
+                city.city = "Novi Sad";
+            } catch (Exception e)
+            {
+
+            }
+            
             currentLocation = city.city;
             _currentCity = currentLocation;
             changeFavouritesIcon();
@@ -346,42 +384,59 @@ namespace Project
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            await LoadLocation();
+            try
+            {
+                await LoadLocation();
+                
+            } catch (Exception)
+            {
+
+            }
+            
             startNewThread();
+           
+            
         }
 
         private void hourlyClick(object sender, RoutedEventArgs e)
         {
-            var dayIndex = ((Button)sender).Tag;
-            if (dayIndex.Equals("0"))
+            try
             {
-                Day0Hours.Visibility = Visibility.Visible;
-                Day0.Visibility = Visibility.Hidden;
-            }
+                var dayIndex = ((Button)sender).Tag;
+                if (dayIndex.Equals("0"))
+                {
+                    Day0Hours.Visibility = Visibility.Visible;
+                    Day0.Visibility = Visibility.Hidden;
+                }
 
-            if (dayIndex.Equals("1"))
-            {
-                Day1Hours.Visibility = Visibility.Visible;
-                Day1.Visibility = Visibility.Hidden;
-            }
+                if (dayIndex.Equals("1"))
+                {
+                    Day1Hours.Visibility = Visibility.Visible;
+                    Day1.Visibility = Visibility.Hidden;
+                }
 
-            if (dayIndex.Equals("2"))
-            {
-                Day2Hours.Visibility = Visibility.Visible;
-                Day2.Visibility = Visibility.Hidden;
-            }
+                if (dayIndex.Equals("2"))
+                {
+                    Day2Hours.Visibility = Visibility.Visible;
+                    Day2.Visibility = Visibility.Hidden;
+                }
 
-            if (dayIndex.Equals("3"))
-            {
-                Day3Hours.Visibility = Visibility.Visible;
-                Day3.Visibility = Visibility.Hidden;
-            }
+                if (dayIndex.Equals("3"))
+                {
+                    Day3Hours.Visibility = Visibility.Visible;
+                    Day3.Visibility = Visibility.Hidden;
+                }
 
-            if (dayIndex.Equals("4"))
+                if (dayIndex.Equals("4"))
+                {
+                    Day4Hours.Visibility = Visibility.Visible;
+                    Day4.Visibility = Visibility.Hidden;
+                }
+            } catch
             {
-                Day4Hours.Visibility = Visibility.Visible;
-                Day4.Visibility = Visibility.Hidden;
+
             }
+            
         }
 
         private void closeDay0(object sender, RoutedEventArgs e)

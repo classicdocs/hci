@@ -131,7 +131,9 @@
         <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,2,2,0" HorizontalAlignment="Right">
             <Label>Last time updated:</Label>
             <Label Content="{Binding CurrentWeather.dateUpdated}"></Label>
-            <Button Click="btn_update_click" Content="{StaticResource RefreshIcon}"></Button>
+            <Button Click="btn_update_click" Content="{StaticResource RefreshIcon}">
+                <Button.ToolTip>Update weather data</Button.ToolTip>
+            </Button>
         </StackPanel>
         
         <!-- Janko dodao -->

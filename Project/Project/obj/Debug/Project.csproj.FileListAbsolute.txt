@@ -20,7 +20,6 @@ D:\Workspace\Interakcija covek-racunar\hci\Project\Project\bin\Debug\System.Net.
 D:\Workspace\Interakcija covek-racunar\hci\Project\Project\bin\Debug\Newtonsoft.Json.pdb
 D:\Workspace\Interakcija covek-racunar\hci\Project\Project\bin\Debug\Newtonsoft.Json.xml
 D:\Workspace\Interakcija covek-racunar\hci\Project\Project\bin\Debug\System.Net.Http.Formatting.xml
-D:\Workspace\Interakcija covek-racunar\hci\Project\Project\obj\Debug\Project.csprojResolveAssemblyReference.cache
 D:\Workspace\Interakcija covek-racunar\hci\Project\Project\obj\Debug\MainWindow.g.cs
 D:\Workspace\Interakcija covek-racunar\hci\Project\Project\obj\Debug\App.g.cs
 D:\Workspace\Interakcija covek-racunar\hci\Project\Project\obj\Debug\Project_MarkupCompile.cache
@@ -70,3 +69,8 @@ E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\MainWindo
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.g.resources
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.Properties.Resources.resources
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.csproj.GenerateResource.Cache
+<<<<<<< HEAD
+=======
+E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.csprojResolveAssemblyReference.cache
+D:\Workspace\Interakcija covek-racunar\hci\Project\Project\obj\Debug\Project.csprojResolveAssemblyReference.cache
+>>>>>>> Stefan
