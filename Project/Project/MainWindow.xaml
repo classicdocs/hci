@@ -89,7 +89,7 @@
         </Grid.RowDefinitions>
 
         <!-- TOP MENI - Sadrzi padajucu listu za favourites, history, input field za pretragu i dugme search za pretragu -->
-        <Grid Grid.ColumnSpan="4" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="5">
+        <Grid Grid.ColumnSpan="5" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="5">
             <Menu Background="LightBlue">
                 <Menu.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -121,7 +121,7 @@
             </Menu>
         </Grid>
         <!--HOME DUGME, nece da se rasiri preko cele pete kolone pa to ti je-->
-        <StackPanel Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,2,2,0" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,2,2,0" HorizontalAlignment="Right">
             <Button Margin="3" Name="homeBtn" Click="homeBtnClick" Content="{StaticResource HomeIcon}"
                     BorderBrush="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto">
                 <Button.ToolTip>Go to home location</Button.ToolTip>

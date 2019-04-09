@@ -224,14 +224,23 @@ namespace Project
                 {
                     location = currentLocation;
                     _currentCity = location;
-                    weather = await ApiProcessor.LoadWeather(location);
-                    HoursTemp.Clear();
-                    DaysTemp.Clear();
-                    setHoursTemp(weather);
-                    setCurrentTemp(weather, location);
-                    setDaysTemp(weather);
-                    MessageBox.Show(e.Message, "Error");
-                } catch (Exception e)
+                    try
+                    {
+                        weather = await ApiProcessor.LoadWeather(location);
+                        HoursTemp.Clear();
+                        DaysTemp.Clear();
+                        setHoursTemp(weather);
+                        setCurrentTemp(weather, location);
+                        setDaysTemp(weather);
+                    } catch (MyException ex)
+                    {
+                    } 
+                     MessageBox.Show(e.Message, "Error");
+
+                    //changeFavouritesIcon();
+
+                }
+                catch (Exception e)
                 {
 
                 }
@@ -295,7 +304,7 @@ namespace Project
                     dt.hoursTemp.Add(ht);
                 }
                 
-                dt.temp = ((int)max_temp) + "/" + ((int)min_temp);
+                dt.temp = ((int)max_temp) + "/" + ((int)min_temp) + "°C";
                 DaysTemp.Add(dt);
                 if (end) break;
             }
@@ -513,14 +522,16 @@ namespace Project
         {
             if (!this.favouriteCities.Contains(_currentCity))
             {
-                addToFavBtn.Background = this.notFavouriteImg;
-                addToFavBtn.ToolTip = "Add to favourites";
+                 addToFavBtn.Background = this.notFavouriteImg;
+                 addToFavBtn.ToolTip = "Add to favourites";
+               
                 isFavourite = true;
             }
             else
             {
-                addToFavBtn.Background = this.favouriteImg; 
+                addToFavBtn.Background = this.favouriteImg;
                 addToFavBtn.ToolTip = "Remove from favourites";
+                    
                 isFavourite = false;
             }
         }
@@ -654,6 +665,7 @@ namespace Project
 
         private void btn_update_click(object sender, RoutedEventArgs e)
         {
+            changeFavouritesIcon();
             thread.Abort();
             startNewThread();
         }
