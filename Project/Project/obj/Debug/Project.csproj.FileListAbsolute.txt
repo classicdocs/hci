@@ -55,7 +55,6 @@ C:\Users\Milos\Documents\HCI\hci\Project\Project\obj\Debug\Project.pdb
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\bin\Debug\Project.exe.config
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.exe
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.pdb
-E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project.csprojResolveAssemblyReference.cache
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\App.g.cs
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\Project_MarkupCompile.cache
 E:\FAKS\SEMESTAR_6\ICR\VremenskaPrognoza\hci\Project\Project\obj\Debug\MainWindow.g.cs

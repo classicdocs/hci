@@ -17,6 +17,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using System.Windows.Resources;
+using System.IO;
 
 namespace Project
 {
@@ -29,21 +30,44 @@ namespace Project
         private ImageBrush favouriteImg = new ImageBrush();
         private ImageBrush notFavouriteImg = new ImageBrush();
 
-        
+        string pathFavourites = @"../../Resources\favourites.txt";
+
+        private bool isFavourite = false;
+        private List<MenuItem> favouriteItemsList;
+
         private string currentLocation = "";
 
         Thread thread = null;
 
         private string _currentCity { get; set; }
+
         public string currentCity
         {
             get { return _currentCity; }
             set { if (_currentCity != value)
-                    {
-                        _currentCity = value;
-                        OnPropertyChanged();
-                    }
+                {
+                    _currentCity = value;
+                    OnPropertyChanged();
                 }
+            }
+        }
+
+        //private string _favouriteSearchCity { get; set; }
+
+        //public string favouriteSearchCity
+        //{
+        //    get { return _favouriteSearchCity; }
+        //    set { if(_favouriteSearchCity != value)
+        //        {
+        //            _favouriteSearchCity = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
+
+        public ObservableCollection<String> favouriteCities
+        {
+            get; set;
         }
 
         private CurrentWeather _CurrentWeather
@@ -72,14 +96,51 @@ namespace Project
             get; set;
         }
 
+        // metoda koja ucitava gradove koji su zapamceni kao omiljeni
+        public void loadFavorites()
+        {
+            favouriteCities = new ObservableCollection<string>();
+            string contents = File.ReadAllText(this.pathFavourites);
+
+            if (contents != null)
+            {
+                foreach (string cityName in contents.Split(','))
+                {
+                    if (cityName[cityName.Length - 1] == '\n')
+                    {
+                        cityName.Remove(cityName.Length - 1);
+                    }
+                    this.favouriteCities.Add(cityName);
+                }
+            }
+            if (this.favouriteCities.Contains(_currentCity))
+            {
+                isFavourite = true;
+            }
+            for (int i = this.favouriteCities.Count(); i < 5; i++)
+            {
+                if(this.favouriteItemsList[i] != null)
+                {
+                    this.favouriteItemsList[i].IsEnabled = false;
+                }
+            }
+        }
+
         public MainWindow()
         {
             InitialiseIcons();
+            
+
             InitializeComponent();
             DataContext = this;
             HoursTemp = new ObservableCollection<HourTemp>();
             DaysTemp = new ObservableCollection<DayTemp>();
             CurrentWeather = new CurrentWeather();
+            favouriteItemsList = new List<MenuItem>()
+            {
+                fav_0, fav_1, fav_2, fav_3, fav_4
+            };
+            loadFavorites();
             ApiHandler.InitializeClient();
         }
 
@@ -110,6 +171,7 @@ namespace Project
                 setHoursTemp(weather);
                 setCurrentTemp(weather, location);
                 setDaysTemp(weather);
+
                 Thread.Sleep(TimeSpan.FromMinutes(30));
             }
         }
@@ -203,6 +265,7 @@ namespace Project
             currentWeather.data.temp = temp;
             currentWeather.dateUpdated = DateTime.Now.ToString("hh:mm");
             CurrentWeather = currentWeather;
+
         }
 
         private async Task LoadLocation()
@@ -210,6 +273,7 @@ namespace Project
             var city = await ApiProcessor.LoadLocation();
             currentLocation = city.city;
             _currentCity = currentLocation;
+            changeFavouritesIcon();
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -282,28 +346,127 @@ namespace Project
             Day4.Visibility = Visibility.Visible;
         }
 
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                searchClick(sender, e);
+            }
+        }
+
         private void searchClick(object sender, RoutedEventArgs e)
         {
-            //TODO binding
+            changeFavouritesIcon();
             this.thread.Abort();
             startNewThread();
-            //LoadWeather(_currentCity);
-
         }
-        private void addToFavoritesClick(object sender, RoutedEventArgs e)
+
+
+        private void changeFavouritesIcon()
         {
-            if (addToFavBtn.IsDefault)
+            if (!this.favouriteCities.Contains(_currentCity))
+            {
+                addToFavBtn.Background = this.notFavouriteImg;
+                addToFavBtn.ToolTip = "Remove from favourites";
+                isFavourite = true;
+            }
+            else
             {
                 addToFavBtn.Background = this.favouriteImg;
-                addToFavBtn.IsDefault = !addToFavBtn.IsDefault;
+                addToFavBtn.ToolTip = "Add to favourites";
+                isFavourite = false;
+            }
+        }
+
+        private bool addCityToFavourites(string city)
+        {
+            if(this.favouriteCities.Count() == 5)   
+            {
+                MessageBox.Show("You tried to add new city to favourites list, it is not possible" + 
+                    " because you can't have more than 5 favourite cities.\n" + 
+                    "\nTo perform this action, remove at least one favourite city, and try again.",
+                    "WARNING : city is not added to favourites.");
+                return false;
+            }else
+            {
+                this.favouriteCities.Add(city);
+                this.favouriteItemsList[this.favouriteCities.Count()-1].IsEnabled = true;
+                return true;
+            }
+        }
+
+
+        private void addToFavoritesClick(object sender, RoutedEventArgs e)
+        {
+            string newContent = "";
+
+            if (!this.favouriteCities.Contains(_currentCity))
+            {
+                // nije u favoritima, kliknuto je, znaci treba da bude puna zvezda i da se doda u favorite
+                if (addCityToFavourites(_currentCity))
+                {
+                    addToFavBtn.Background = this.favouriteImg;
+                    addToFavBtn.ToolTip = "Remove from favourites";
+
+                    foreach (string city in this.favouriteCities)
+                    {
+                        newContent = newContent + city + ',';
+                    }
+                    newContent = newContent.Remove(newContent.Length - 1);
+                    File.WriteAllText(this.pathFavourites, newContent);
+                    isFavourite = true;
+                }
+                //this.favouriteCities.Add(_currentCity);
             }
             else
             {
                 addToFavBtn.Background = this.notFavouriteImg;
-                addToFavBtn.IsDefault = !addToFavBtn.IsDefault;
+                addToFavBtn.ToolTip = "Add to favourites";
+                this.favouriteCities.Remove(_currentCity);
+                this.favouriteItemsList[this.favouriteCities.Count()].IsEnabled = false;
+                foreach (string city in this.favouriteCities)
+                {
+                    newContent = newContent + city + ',';
+                }
+                newContent = newContent.Remove(newContent.Length - 1);
+                File.WriteAllText(this.pathFavourites, newContent);
+                isFavourite = false;
             }
 
-            //TODO dodaj grad u favourites
+        }
+        private void moveToFav(int i)
+        {
+            if (this.favouriteCities[i].Length > 1)
+            {
+                this._currentCity = this.favouriteCities[i];
+                changeFavouritesIcon();
+                this.thread.Abort();
+                startNewThread();
+            }else
+            {
+                return;
+            }
+        }
+
+        private void fav_0_Click(object sender, RoutedEventArgs e)
+        {
+            moveToFav(0);
+        }
+        private void fav_1_Click(object sender, RoutedEventArgs e)
+        {
+            moveToFav(1);
+        }
+        private void fav_2_Click(object sender, RoutedEventArgs e)
+        {
+           moveToFav(2);
+        }
+        private void fav_3_Click(object sender, RoutedEventArgs e)
+        {
+            moveToFav(3);
+        }
+        private void fav_4_Click(object sender, RoutedEventArgs e)
+        {
+            moveToFav(4);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
