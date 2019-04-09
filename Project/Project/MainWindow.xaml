@@ -110,13 +110,13 @@
                     <MenuItem IsEnabled ="True" Name="fav_4" Header="{Binding favouriteCities[4]}" Click="fav_4_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_History" Margin="5">
-                    <MenuItem Header="_Item #1"></MenuItem>
-                    <MenuItem Header="_Item #2"></MenuItem>
-                    <MenuItem Header="_Item #3"></MenuItem>
-                    <MenuItem Header="_Item #4"></MenuItem>
-                    <MenuItem Header="_Item #4"></MenuItem>
+                    <MenuItem IsEnabled ="True" Name="hist_0" Header="{Binding historyCities[0]}" Click="hist_0_Click"></MenuItem>
+                    <MenuItem IsEnabled ="True" Name="hist_1" Header="{Binding historyCities[1]}" Click="hist_1_Click"></MenuItem>
+                    <MenuItem IsEnabled ="True" Name="hist_2" Header="{Binding historyCities[2]}" Click="hist_2_Click"></MenuItem>
+                    <MenuItem IsEnabled ="True" Name="hist_3" Header="{Binding historyCities[3]}" Click="hist_3_Click"></MenuItem>
+                    <MenuItem IsEnabled ="True" Name="hist_4" Header="{Binding historyCities[4]}" Click="hist_4_Click"></MenuItem>
                 </MenuItem>
-                
+                <MenuItem IsEnabled ="False"></MenuItem>
             </Menu>
         </Grid>
 
