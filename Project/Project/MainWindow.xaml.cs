@@ -104,6 +104,8 @@ namespace Project
             string location = (String)obj;
             while (true)
             {
+                HoursTemp.Clear();
+                DaysTemp.Clear();
                 Weather weather = await ApiProcessor.LoadWeather(location);
                 setHoursTemp(weather);
                 setCurrentTemp(weather, location);
