@@ -207,7 +207,7 @@ namespace Project
         {
             var city = await ApiProcessor.LoadLocation();
             currentLocation = city.city;
-
+            _currentCity = currentLocation;
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -283,6 +283,10 @@ namespace Project
         private void searchClick(object sender, RoutedEventArgs e)
         {
             //TODO binding
+            this.thread.Abort();
+            startNewThread();
+            //LoadWeather(_currentCity);
+
         }
         private void addToFavoritesClick(object sender, RoutedEventArgs e)
         {
@@ -315,7 +319,7 @@ namespace Project
         private void startNewThread()
         {
             thread = new Thread(new ParameterizedThreadStart(LoadWeather));
-            thread.Start(currentLocation);
+            thread.Start(_currentCity);
         }
     }
 }
