@@ -31,9 +31,11 @@ namespace Project
         private ImageBrush notFavouriteImg = new ImageBrush();
 
         string pathFavourites = @"../../Resources\favourites.txt";
+        string pathHistory = @"../../Resources\history.txt";
 
         private bool isFavourite = false;
         private List<MenuItem> favouriteItemsList;
+        private List<MenuItem> historyItemsList;
 
         private string currentLocation = "";
 
@@ -70,6 +72,11 @@ namespace Project
             get; set;
         }
 
+        public ObservableCollection<String> historyCities
+        {
+            get; set;
+        }
+
         private CurrentWeather _CurrentWeather
         {
             get; set;
@@ -99,6 +106,10 @@ namespace Project
         // metoda koja ucitava gradove koji su zapamceni kao omiljeni
         public void loadFavorites()
         {
+            this.favouriteItemsList = new List<MenuItem>()
+            {
+                fav_0, fav_1, fav_2, fav_3, fav_4
+            };
             favouriteCities = new ObservableCollection<string>();
             string contents = File.ReadAllText(this.pathFavourites);
 
@@ -106,11 +117,14 @@ namespace Project
             {
                 foreach (string cityName in contents.Split(','))
                 {
-                    if (cityName[cityName.Length - 1] == '\n')
+                    if (cityName.Length > 1)
                     {
-                        cityName.Remove(cityName.Length - 1);
+                        if (cityName[cityName.Length - 1] == '\n')
+                        {
+                            cityName.Remove(cityName.Length - 1);
+                        }
+                        this.favouriteCities.Add(cityName);
                     }
-                    this.favouriteCities.Add(cityName);
                 }
             }
             if (this.favouriteCities.Contains(_currentCity))
@@ -126,6 +140,38 @@ namespace Project
             }
         }
 
+        private void loadHistory()
+        {
+            this.historyItemsList = new List<MenuItem>()
+            {
+                hist_0, hist_1, hist_2, hist_3, hist_4
+            };
+            this.historyCities = new ObservableCollection<string>();
+            string contents = File.ReadAllText(this.pathHistory);
+
+            if (contents != null)
+            {
+                foreach (string cityName in contents.Split(','))
+                {
+                    if(cityName.Length > 1)
+                    {
+                        if (cityName[cityName.Length - 1] == '\n')
+                        {
+                            cityName.Remove(cityName.Length - 1);
+                        }
+                        this.historyCities.Add(cityName);
+                    }
+                }
+            }
+            for (int i = this.historyCities.Count(); i < 5; i++)
+            {
+                if (this.historyItemsList[i] != null)
+                {
+                    this.historyItemsList[i].IsEnabled = false;
+                }
+            }
+        }
+
         public MainWindow()
         {
             InitialiseIcons();
@@ -136,13 +182,12 @@ namespace Project
             HoursTemp = new ObservableCollection<HourTemp>();
             DaysTemp = new ObservableCollection<DayTemp>();
             CurrentWeather = new CurrentWeather();
-            favouriteItemsList = new List<MenuItem>()
-            {
-                fav_0, fav_1, fav_2, fav_3, fav_4
-            };
+            
             loadFavorites();
+            loadHistory();
             ApiHandler.InitializeClient();
         }
+
 
         private void InitialiseIcons()
         {
@@ -235,6 +280,28 @@ namespace Project
                 DaysTemp.Add(dt);
                 if (end) break;
             }
+            int x = DaysTemp[4].hoursTemp.Count;
+            if (x != 8)
+            {
+                for (int i = x; i < DaysTemp[3].hoursTemp.Count; i++)
+                {
+                    HourTemp ht = new HourTemp();
+                    ht = DaysTemp[3].hoursTemp[i];
+                    DaysTemp[4].hoursTemp.Add(ht);
+                }
+                if (DaysTemp[4].img1 == null)
+                {
+                    DaysTemp[4].img1 = DaysTemp[3].img1;
+                } else if (DaysTemp[4].img2 == null)
+                {
+                    DaysTemp[4].img2 = DaysTemp[3].img2;
+                }
+                if (DaysTemp[4].temp.Equals("-100/100"))
+                {
+                    DaysTemp[4].temp = DaysTemp[3].temp;
+                }
+            }
+
             Console.Write("");
 
         }
@@ -346,6 +413,24 @@ namespace Project
             Day4.Visibility = Visibility.Visible;
         }
 
+        private void addToHistory()
+        {
+            this.historyCities.Insert(0, _currentCity);
+            if (this.historyCities.Count() == 6)
+            {
+                this.historyCities.RemoveAt(5);
+            }
+            this.historyItemsList[this.historyCities.Count() - 1].IsEnabled = true;
+            
+            string newContent = "";
+            foreach (string city in this.historyCities)
+            {
+                newContent = newContent + city + ',';
+            }
+            newContent = newContent.Remove(newContent.Length - 1);
+            File.WriteAllText(this.pathHistory, newContent);
+        }
+
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -357,6 +442,7 @@ namespace Project
         private void searchClick(object sender, RoutedEventArgs e)
         {
             changeFavouritesIcon();
+            addToHistory();
             this.thread.Abort();
             startNewThread();
         }
@@ -416,7 +502,6 @@ namespace Project
                     File.WriteAllText(this.pathFavourites, newContent);
                     isFavourite = true;
                 }
-                //this.favouriteCities.Add(_currentCity);
             }
             else
             {
@@ -468,6 +553,28 @@ namespace Project
         {
             moveToFav(4);
         }
+
+
+        private void moveToHist(int i)
+        {
+            if (this.historyCities[i].Length > 1)
+            {
+                this._currentCity = this.historyCities[i];
+                changeFavouritesIcon();
+                this.thread.Abort();
+                startNewThread();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void hist_0_Click(object sender, RoutedEventArgs e) { moveToHist(0); }
+        private void hist_1_Click(object sender, RoutedEventArgs e) { moveToHist(1); }
+        private void hist_2_Click(object sender, RoutedEventArgs e) { moveToHist(2); }
+        private void hist_3_Click(object sender, RoutedEventArgs e) { moveToHist(3); }
+        private void hist_4_Click(object sender, RoutedEventArgs e) { moveToHist(4); }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
